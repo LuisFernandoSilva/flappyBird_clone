@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://scripts/pipe.gd" type="Script" id=1]
 [ext_resource path="res://assets/cano.png" type="Texture" id=2]
@@ -7,6 +7,12 @@
 
 custom_solver_bias = 0.0
 extents = Vector2( 117.39, 920.53 )
+
+[sub_resource type="SegmentShape2D" id=2]
+
+custom_solver_bias = 0.0
+a = Vector2( -22.4574, -196.059 )
+b = Vector2( -22.4574, 253.64 )
 
 [node name="pipe" type="Node2D"]
 
@@ -30,6 +36,7 @@ texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
+editor/display_folded = true
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 3.67023, 1133.94 )
@@ -55,5 +62,28 @@ transform/pos = Vector2( -2.04999, -1125.46 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 1
+
+[node name="scoreCollisionArea" type="Area2D" parent="."]
+
+transform/pos = Vector2( 223.246, -12.2143 )
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -75.0507, -11.8463 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="scoreCollisionArea"]
+
+transform/pos = Vector2( -75.0507, -11.8463 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="Area2D" to="." method="_on_Area2D_body_enter"]
+
+[connection signal="body_enter" from="scoreCollisionArea" to="." method="_on_scoreCollisionArea_body_enter"]
 
 
